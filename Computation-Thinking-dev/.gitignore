@@ -1,0 +1,87 @@
+# ==========================================
+# Operating System Files
+# ==========================================
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+desktop.ini
+
+# Linux
+*~
+
+# ==========================================
+# Editor & IDE Files
+# ==========================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# ==========================================
+# Python (Backend & Computational Thinking)
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==========================================
+# Node.js & Web (Frontend)
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+.cache/
+
+# ==========================================
+# Environment & Sensitive Config
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# ==========================================
+# Microsoft Office & Temporary Files
+# ==========================================
+~$*.docx
+~$*.pptx
+~$*.xlsx
+*.tmp
+*.temp
+
+# ==========================================
+# Submission Archives & Compressed Files
+# ==========================================
+*.zip
+*.tar.gz
+*.rar
+*.7z

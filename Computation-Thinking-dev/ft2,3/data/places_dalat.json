@@ -1,0 +1,62 @@
+[
+  {
+    "stt": 1,
+    "name": "Khu Du Lịch Thung Lũng Tình Yêu",
+    "new_address": "3-5-7 Đường Mai Anh Đào, Phường 8, Đà Lạt, Lâm Đồng",
+    "old_address": "Mai Anh Đào, Phường 8, Đà Lạt",
+    "type": "Attraction",
+    "vibes": ["Nature", "Romantic", "Sightseeing"],
+    "avg_price": 250000,
+    "open_time": "07:30",
+    "close_time": "17:00",
+    "rating": 4.3,
+    "lat": 11.9798,
+    "lng": 108.4485,
+    "link": "https://maps.google.com/?q=Thung+Lũng+Tình+Yêu+Đà+Lạt"
+  },
+  {
+    "stt": 2,
+    "name": "Tiệm Cà Phê Túi Mơ To",
+    "new_address": "Hẻm 31 Sào Nam, Phường 11, Đà Lạt, Lâm Đồng",
+    "old_address": "Sào Nam, Phường 11, Đà Lạt",
+    "type": "Café",
+    "vibes": ["Chill", "View_Hunting", "Trending", "Photography"],
+    "avg_price": 70000,
+    "open_time": "07:00",
+    "close_time": "21:30",
+    "rating": 4.6,
+    "lat": 11.9472,
+    "lng": 108.4795,
+    "link": "https://maps.google.com/?q=Túi+Mơ+To+Đà+Lạt"
+  },
+  {
+    "stt": 3,
+    "name": "Bánh Mì Xíu Mại Ri 79",
+    "new_address": "1 Đường Thông Thiên Học, Phường 2, Đà Lạt, Lâm Đồng",
+    "old_address": "1 Thông Thiên Học, Đà Lạt",
+    "type": "Restaurant",
+    "vibes": ["Culinary", "Local_Food", "Budget_Friendly"],
+    "avg_price": 35000,
+    "open_time": "06:00",
+    "close_time": "20:00",
+    "rating": 4.4,
+    "lat": 11.9461,
+    "lng": 108.4352,
+    "link": "https://maps.google.com/?q=Bánh+Mì+Xíu+Mại+Ri+79"
+  },
+  {
+    "stt": 4,
+    "name": "Dalat Wonder Resort",
+    "new_address": "Hoa Hồng, Phường 4, Đà Lạt, Lâm Đồng",
+    "old_address": "Khu du lịch Hồ Tuyền Lâm, Đà Lạt",
+    "type": "Accommodation",
+    "vibes": ["Relaxation", "Luxury", "Nature"],
+    "avg_price": 1200000,
+    "open_time": "00:00",
+    "close_time": "23:59",
+    "rating": 4.5,
+    "lat": 11.8973,
+    "lng": 108.4168,
+    "link": "https://maps.google.com/?q=Dalat+Wonder+Resort"
+  }
+]

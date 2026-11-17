@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Travel Assistant - Đề Xuất Lịch Trình</title>
+    <style>
+        :root { --primary: #0284c7; --bg: #f8fafc; --card: #ffffff; --border: #cbd5e1; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); margin: 0; padding: 20px; color: #0f172a; }
+        .container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 380px 1fr; gap: 24px; }
+        .panel { background: var(--card); border-radius: 12px; padding: 24px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        h2, h3 { color: var(--primary); margin-top: 0; }
+        .form-group { margin-bottom: 18px; }
+        label { font-weight: 600; display: block; margin-bottom: 6px; font-size: 14px; }
+        select, input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        
+        .tags-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; max-height: 150px; overflow-y: auto; border: 1px solid var(--border); padding: 8px; border-radius: 6px; background: #fafafa; }
+        .tag-item { font-size: 13px; display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+        .mode-selector { display: flex; gap: 10px; margin-bottom: 14px; }
+        .mode-btn { flex: 1; padding: 8px; text-align: center; border: 1px solid var(--border); border-radius: 6px; cursor: pointer; background: #f1f5f9; font-size: 13px; font-weight: 600; }
+        .mode-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        button.btn-submit { width: 100%; background: var(--primary); color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        button.btn-submit:hover { background: #0369a1; }
+
+        .summary-card { background: #e0f2fe; padding: 18px; border-radius: 10px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; border: 1px solid #bae6fd; }
+        .summary-stat { font-size: 20px; font-weight: bold; color: #0369a1; margin-top: 4px; }
+
+        .day-header { background: #0284c7; color: white; padding: 10px 16px; border-radius: 6px; font-weight: bold; margin-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .place-card { border-left: 4px solid var(--primary); border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 14px; border-radius: 6px; margin-bottom: 12px; background: #fff; }
+        .place-card.rest-card { border-left-color: #f59e0b; background: #fffbeb; }
+        .place-card.meal-card { border-left-color: #10b981; background: #f0fdf4; }
+
+        .place-header { display: flex; justify-content: space-between; align-items: center; }
+        .place-title { font-weight: bold; font-size: 15px; }
+        .badge { background: #e2e8f0; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+        .vibe-tag { background: #dbeafe; color: #1e40af; font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-right: 4px; }
+        .meta-info { font-size: 13px; color: #475569; margin: 8px 0; line-height: 1.5; }
+
+        .warning-box { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; padding: 16px; border-radius: 8px; font-weight: 500; margin-bottom: 20px; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- PANEL NHẬP LIỆU -->
+    <div class="panel">
+        <h2>🧳 Thông Tin Chuyến Đi</h2>
+        <form id="plannerForm">
+            <div class="form-group">
+                <label>Chọn Thành Phố:</label>
+                <select id="destinationSelect">
+                    <option value="Đà Lạt">Đà Lạt</option>
+                    <option value="Nha Trang">Nha Trang</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Tổng Ngân Sách (Đơn vị: nghìn VNĐ):</label>
+                <input type="number" id="budgetValue" value="6000" step="500" placeholder="Ví dụ: 6000 = 6 Triệu VNĐ">
+                <small style="color:#64748b;">* Nhập 6000 tương đương 6.000.000 VNĐ</small>
+            </div>
+
+            <div class="form-group">
+                <label>Số Ngày Đi:</label>
+                <input type="number" id="daysValue" value="3" min="1" max="7">
+            </div>
+
+            <div class="form-group">
+                <label>Số Người:</label>
+                <input type="number" id="partyValue" value="2" min="1">
+            </div>
+
+            <!-- CHỌN CHẾ ĐỘ VIBES/TYPES -->
+            <div class="form-group">
+                <label>Chế độ chọn Phong cách (Vibes/Types):</label>
+                <div class="mode-selector">
+                    <div id="btnModeAll" class="mode-btn active" onclick="switchMode('all_days')">Áp dụng cả chuyến đi</div>
+                    <div id="btnModePerDay" class="mode-btn" onclick="switchMode('per_day')">Chọn riêng từng ngày</div>
+                </div>
+            </div>
+
+            <!-- CONTAINER CHO TẤT CẢ CÁC NGÀY -->
+            <div id="globalPrefContainer">
+                <div class="form-group">
+                    <label>Loại hình mong muốn (Types):</label>
+                    <div id="globalTypesGrid" class="tags-grid"></div>
+                </div>
+                <div class="form-group">
+                    <label>Phong cách du lịch (Vibes):</label>
+                    <div id="globalVibesGrid" class="tags-grid"></div>
+                </div>
+            </div>
+
+            <!-- CONTAINER CHO TỪNG NGÀY -->
+            <div id="dailyPrefContainer" style="display:none;"></div>
+
+            <button type="submit" class="btn-submit">🚀 Đề Xuất Lịch Trình Tối Ưu</button>
+        </form>
+    </div>
+
+    <!-- PANEL KẾT QUẢ -->
+    <div class="panel">
+        <h2>🗺️ Kết Quả Đề Xuất & Lịch Trình</h2>
+        <div id="resultContainer">Chọn thông tin bên trái và nhấn <b>"Đề Xuất Lịch Trình Tối Ưu"</b>.</div>
+    </div>
+</div>
+
+<script>
+    const API_BASE = "http://127.0.0.1:8001/api";
+    
+    // Dữ liệu fallback dự phòng lập tức
+    let configData = {
+        cities: ["Đà Lạt", "Nha Trang"],
+        preset_types: ["Attraction", "Restaurant", "Café", "Accommodation"],
+        preset_vibes: ["Nature", "Chill", "Adventure", "Romantic", "Cultural", "View_Hunting", "Culinary", "Local_Food", "Relaxation", "Luxury", "Budget_Friendly", "Photography", "Trending", "Sightseeing"]
+    };
+    let currentMode = "all_days";
+
+    function renderTagsGrid(containerId, items, inputName, checkedItems) {
+        const grid = document.getElementById(containerId);
+        if (!grid) return;
+        grid.innerHTML = "";
+        items.forEach(item => {
+            const isChecked = checkedItems.includes(item) ? "checked" : "";
+            grid.innerHTML += `
+                <label class="tag-item">
+                    <input type="checkbox" name="${inputName}" value="${item}" ${isChecked}> ${item}
+                </label>`;
+        });
+    }
+
+    function renderInitialUI() {
+        // Render Cities
+        const citySel = document.getElementById("destinationSelect");
+        if (citySel) {
+            citySel.innerHTML = "";
+            configData.cities.forEach(c => citySel.innerHTML += `<option value="${c}">${c}</option>`);
+        }
+
+        // Render Global Grids
+        renderTagsGrid("globalTypesGrid", configData.preset_types, "global_type", configData.preset_types);
+        renderTagsGrid("globalVibesGrid", configData.preset_vibes, "global_vibe", ["Chill", "Nature", "Culinary", "Local_Food"]);
+    }
+
+    async function fetchServerConfig() {
+        try {
+            const res = await fetch(`${API_BASE}/config-data`);
+            if (res.ok) {
+                configData = await res.json();
+                renderInitialUI();
+            }
+        } catch (e) {
+            console.warn("Không kết nối được API config, dùng cấu hình mặc định:", e);
+        }
+    }
+
+    function switchMode(mode) {
+        currentMode = mode;
+        document.getElementById("btnModeAll").classList.toggle("active", mode === "all_days");
+        document.getElementById("btnModePerDay").classList.toggle("active", mode === "per_day");
+
+        if (mode === "all_days") {
+            document.getElementById("globalPrefContainer").style.display = "block";
+            document.getElementById("dailyPrefContainer").style.display = "none";
+        } else {
+            document.getElementById("globalPrefContainer").style.display = "none";
+            document.getElementById("dailyPrefContainer").style.display = "block";
+            updateDailyPrefUI();
+        }
+    }
+
+    function updateDailyPrefUI() {
+        if (currentMode !== "per_day") return;
+        const days = parseInt(document.getElementById("daysValue").value) || 1;
+        const container = document.getElementById("dailyPrefContainer");
+        container.innerHTML = "";
+
+        for (let i = 1; i <= days; i++) {
+            container.innerHTML += `
+                <div style="border:1px solid #cbd5e1; padding:12px; border-radius:8px; margin-bottom:12px; background:#f8fafc;">
+                    <h4 style="margin:0 0 8px 0; color:#0284c7;">📌 Phong cách Ngày ${i}</h4>
+                    <label style="font-size:12px;">Chọn Vibes cho ngày ${i}:</label>
+                    <div id="day_vibes_grid_${i}" class="tags-grid" style="max-height:100px;"></div>
+                </div>
+            `;
+        }
+
+        for (let i = 1; i <= days; i++) {
+            renderTagsGrid(`day_vibes_grid_${i}`, configData.preset_vibes, `day_${i}_vibe`, ["Chill", "Nature"]);
+        }
+    }
+
+    document.getElementById("daysValue").addEventListener("change", updateDailyPrefUI);
+
+    document.getElementById("plannerForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        
+        const days = parseInt(document.getElementById("daysValue").value);
+        const payload = {
+            destination: document.getElementById("destinationSelect").value,
+            budget_k_vnd: parseFloat(document.getElementById("budgetValue").value),
+            days: days,
+            party_size: parseInt(document.getElementById("partyValue").value),
+            preference_mode: currentMode,
+            global_types: Array.from(document.querySelectorAll('input[name="global_type"]:checked')).map(cb => cb.value),
+            global_vibes: Array.from(document.querySelectorAll('input[name="global_vibe"]:checked')).map(cb => cb.value),
+            daily_preferences: []
+        };
+
+        if (currentMode === "per_day") {
+            for (let i = 1; i <= days; i++) {
+                const dayVibes = Array.from(document.querySelectorAll(`input[name="day_${i}_vibe"]:checked`)).map(cb => cb.value);
+                payload.daily_preferences.push({
+                    day_number: i,
+                    selected_types: payload.global_types,
+                    selected_vibes: dayVibes
+                });
+            }
+        }
+
+        try {
+            const res = await fetch(`${API_BASE}/generate-itinerary`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            renderResults(data);
+        } catch (err) {
+            document.getElementById("resultContainer").innerHTML = `
+                <div class="warning-box">
+                    ❌ <b>LỖI KẾT NỐI API:</b> Không thể kết nối tới server <code>http://127.0.0.1:8001</code>.<br>
+                    Hãy chắc chắn rằng Terminal đang chạy <code>python main.py</code> nhé!
+                </div>
+            `;
+        }
+    });
+
+    function renderResults(data) {
+        const container = document.getElementById("resultContainer");
+
+        if (data.status === "warning") {
+            container.innerHTML = `<div class="warning-box">⚠️ <b>CẢNH BÁO NGÂN SÁCH KHÔNG HỢP LÝ:</b><br>${data.message}</div>`;
+            return;
+        }
+
+        const s = data.summary;
+        let html = `
+            <div class="summary-card">
+                <div><span>Tổng ngân sách</span><div class="summary-stat">${s.user_budget_k_vnd.toLocaleString()}kđ</div></div>
+                <div><span>Chi phí dự kiến</span><div class="summary-stat" style="color:#0284c7;">${s.total_estimated_cost_k_vnd.toLocaleString()}kđ</div></div>
+                <div><span>Còn dư dự phòng</span><div class="summary-stat" style="color:#10b981;">${(s.budget_remaining_vnd/1000).toLocaleString()}kđ</div></div>
+                <div><span>Tổng di chuyển</span><div class="summary-stat">${s.total_distance_km} km</div></div>
+            </div>
+
+            <div style="background:#f1f5f9; padding:12px 16px; border-radius:8px; margin-bottom:20px; font-size:14px; border: 1px solid #e2e8f0;">
+                🏠 <b>Khách sạn/Nơi ở đề xuất:</b> <b>${s.accommodation.name}</b> (${s.accommodation.avg_price.toLocaleString()}đ/đêm) 
+                <br>📍 <i>Địa chỉ: ${s.accommodation.new_address}</i>
+            </div>
+            
+            <h3>🗓️ Lịch Trình Chi Tiết Các Ngày</h3>
+        `;
+
+        data.daily_itinerary.forEach(day => {
+            html += `
+                <div class="day-header">
+                    <span>${day.day_title}</span>
+                    <span style="font-size:12px; font-weight:normal;">Vibes: ${day.target_vibes.join(', ')}</span>
+                </div>
+            `;
+
+            day.activities.forEach(act => {
+                const p = act.place;
+                let cardClass = "place-card";
+                if (act.category.includes("Bữa") || act.category.includes("Tối")) cardClass += " meal-card";
+                if (act.category.includes("Nghỉ Ngơi")) cardClass += " rest-card";
+
+                html += `
+                    <div class="${cardClass}">
+                        <div class="place-header">
+                            <span class="place-title">[${act.time}] ${p.name}</span>
+                            <span class="badge">${act.category}</span>
+                        </div>
+                        <div class="meta-info">
+                            📍 <b>Địa chỉ:</b> ${p.new_address} <br>
+                            ⭐ <b>Rating:</b> ${p.rating || 'N/A'} | 
+                            ⏱️ <b>Giờ mở cửa:</b> ${p.open_time} - ${p.close_time} |
+                            💰 <b>Chi phí dự tính đoàn:</b> ${act.cost_vnd.toLocaleString()} VNĐ
+                            <br>💡 <i>${act.note}</i>
+                        </div>
+                        <div>
+                            ${p.vibes ? p.vibes.map(v => `<span class="vibe-tag">#${v}</span>`).join('') : ''}
+                            <span style="font-size:12px; color:#0284c7; margin-left:8px;">🚗 Di chuyển từ điểm trước: ${act.distance_km} km</span>
+                            ${p.link ? `<a href="${p.link}" target="_blank" style="float:right; font-size:12px; color:#0284c7; text-decoration:none;">Xem Google Maps ↗</a>` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        container.innerHTML = html;
+    }
+
+    // Chạy render UI ngay lập tức không phụ thuộc API
+    renderInitialUI();
+    fetchServerConfig();
+</script>
+</body>
+</html>

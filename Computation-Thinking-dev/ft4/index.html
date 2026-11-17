@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khảo Sát Đánh Giá Ứng Dụng Du Lịch</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background: var(--card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+
+        .group-title {
+            background: #eff6ff;
+            color: var(--primary);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 16px;
+        }
+
+        .question-card {
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .tag-badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 6px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f1f5f9;
+        }
+
+        .option-label input[type="radio"] {
+            accent-color: var(--primary);
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-sizing: border-box;
+            margin-top: 8px;
+            font-family: inherit;
+        }
+
+        button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 16px;
+            display: none;
+        }
+        .alert-success { background: #dcfce7; color: #166534; }
+        .alert-error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Khảo Sát Đánh Giá Ứng Dụng</h1>
+    <p class="subtitle">Ý kiến của bạn đóng góp trực tiếp vào chất lượng thuật toán du lịch!</p>
+
+    <form id="surveyForm">
+        <div id="questionsContainer">Đang tải câu hỏi...</div>
+
+        <div style="margin-top: 24px;">
+            <label style="font-weight: 500;">Ý kiến đóng góp khác (không bắt buộc):</label>
+            <textarea id="commentInput" placeholder="Nhập cảm nhận hoặc góp ý khác của bạn..."></textarea>
+        </div>
+
+        <button type="submit" id="btnSubmit">🚀 Gửi Khảo Sát</button>
+    </form>
+
+    <div id="alertBox" class="alert"></div>
+</div>
+
+<script>
+    const API_BASE = "http://127.0.0.1:8000/api";
+    let questionsData = [];
+
+    // 1. Tải danh sách câu hỏi từ FastAPI
+    async function loadQuestions() {
+        try {
+            const res = await fetch(`${API_BASE}/questions`);
+            questionsData = await res.json();
+            renderQuestions(questionsData);
+        } catch (err) {
+            document.getElementById("questionsContainer").innerHTML = 
+                `<p style="color:red">Không kết nối được tới Server FastAPI! Đảm bảo server đang chạy ở port 8000.</p>`;
+        }
+    }
+
+    // 2. Render giao diện câu hỏi
+    function renderQuestions(questions) {
+        const container = document.getElementById("questionsContainer");
+        container.innerHTML = "";
+
+        let currentGroup = "";
+
+        questions.forEach((q, index) => {
+            if (q.group !== currentGroup) {
+                currentGroup = q.group;
+                const groupHeader = document.createElement("div");
+                groupHeader.className = "group-title";
+                groupHeader.innerText = currentGroup;
+                container.appendChild(groupHeader);
+            }
+
+            const qCard = document.createElement("div");
+            qCard.className = "question-card";
+
+            let optionsHTML = "";
+            q.options.forEach((optText, i) => {
+                const score = i + 1;
+                optionsHTML += `
+                    <label class="option-label">
+                        <input type="radio" name="${q.id}" value="${score}" ${score === 4 ? 'checked' : ''}>
+                        <span><strong>${score} điểm:</strong> ${optText}</span>
+                    </label>
+                `;
+            });
+
+            qCard.innerHTML = `
+                <div class="question-text">
+                    ${index + 1}. ${q.text} 
+                    <span class="tag-badge">Tag: ${q.tag}</span>
+                </div>
+                <div class="options-group">${optionsHTML}</div>
+            `;
+            container.appendChild(qCard);
+        });
+    }
+
+    // 3. Xử lý submit khảo sát
+    document.getElementById("surveyForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const answers = {};
+        questionsData.forEach(q => {
+            const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+            if (selected) {
+                answers[q.id] = parseInt(selected.value);
+            }
+        });
+
+        const comment = document.getElementById("commentInput").value;
+
+        try {
+            const res = await fetch(`${API_BASE}/survey/submit`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_id: "USR_" + Math.floor(Math.random() * 8999 + 1000),
+                    answers: answers,
+                    comment: comment
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                showAlert(`✅ ${data.message} (Mã phiếu: ${data.survey_id} | ĐTB: ${data.average_score}/5)`, "success");
+            } else {
+                showAlert(`⚠️ Lỗi: ${data.detail}`, "error");
+            }
+        } catch (err) {
+            showAlert("❌ Không thể kết nối tới máy chủ!", "error");
+        }
+    });
+
+    function showAlert(msg, type) {
+        const box = document.getElementById("alertBox");
+        box.className = `alert alert-${type}`;
+        box.innerText = msg;
+        box.style.display = "block";
+    }
+
+    loadQuestions();
+</script>
+</body>
+</html>

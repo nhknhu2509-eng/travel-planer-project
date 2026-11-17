@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group 02 - Project Proposal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css">
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 15mm 18mm 15mm;
+    }
+    body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .markdown-body {
+      background-color: #ffffff;
+      padding: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      border: 1px solid #d0d7de !important;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f6f8fa;
+      font-weight: 600;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+    .problem-block {
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-top: 14px;
+      margin-bottom: 20px;
+    }
+    hr {
+      margin: 16px 0;
+    }
+    a {
+      color: #0969da;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <article class="markdown-body">
+    <h1 id="project-proposal-engineering-a-smart-virtual-assistant">PROJECT PROPOSAL: ENGINEERING A SMART VIRTUAL ASSISTANT</h1>
+<p><strong>Course:</strong> CSC10014 / Computational Thinking / 2026<br><strong>Group ID:</strong> Group 02<br><strong>Domain:</strong> Travel Planner Assistant</p>
+<h2 id="team-members">TEAM MEMBERS</h2>
+<table>
+<thead>
+<tr>
+<th align="center">No.</th>
+<th align="left">Full Name</th>
+<th align="center">Student ID</th>
+<th align="left">Role in Project</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="left">Từ Nguyễn Thuận Thiên</td>
+<td align="center">25127146</td>
+<td align="left">Developer &amp; Data/API Handler</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="left">Nguyễn Huỳnh Khánh Như</td>
+<td align="center">25127222</td>
+<td align="left">Team leader &amp; Presenter</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="left">Nguyễn Thị Hoàng Châu</td>
+<td align="center">25127022</td>
+<td align="left">Front-end</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="left">Nguyễn Bạch Thành Nhân</td>
+<td align="center">25127111</td>
+<td align="left">QA/Tester &amp; Documentation</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="left">Nguyễn Bình An</td>
+<td align="center">23127149</td>
+<td align="left">Developer &amp; Logic Implementer</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="table-of-contents">TABLE OF CONTENTS</h2>
+<ul>
+<li><a href="#1-the-ill-defined-problem">1. THE ILL-DEFINED PROBLEM</a></li>
+<li><a href="#2-the-well-defined-problem">2. THE WELL-DEFINED PROBLEM</a></li>
+<li><a href="#3-an-initial-version-of-the-four-pillars">3. AN INITIAL VERSION OF THE FOUR PILLARS</a><ul>
+<li><a href="#31-decomposition">3.1. Decomposition</a></li>
+<li><a href="#32-pattern-recognition">3.2. Pattern Recognition</a></li>
+<li><a href="#33-abstraction">3.3. Abstraction</a></li>
+<li><a href="#34-algorithm-design">3.4. Algorithm Design</a></li>
+</ul>
+</li>
+<li><a href="#4-several-solutions-and-directions-explored">4. SEVERAL SOLUTIONS AND DIRECTIONS EXPLORED</a><ul>
+<li><a href="#41-exploration-of-approaches-for-sub-problems">4.1. Exploration of Approaches for Sub-Problems</a></li>
+<li><a href="#42-selected-overall-solution">4.2. Selected Overall Solution</a></li>
+<li><a href="#43-implementation-roadmap-dataset-and-algorithm-directions">4.3. Implementation Roadmap: Dataset and Algorithm Directions</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="1-the-ill-defined-problem">1. THE ILL-DEFINED PROBLEM</h2>
+<p>Nowadays, when planning a trip, users often have to search for and compile information from multiple sources, such as Google Maps, transportation booking websites, hotel booking platforms, destination reviews, and weather forecasts. This process leads to several problems: </p>
+<p><strong>Problem 1: Difficulty Finding Destinations That Match Personal Preferences</strong> </p>
+<p>Users may find numerous tourist destinations but struggle to determine which ones best suit their preferences, group size, travel duration, and trip objectives. For example, people who enjoy adventure and exploration have different travel needs from those who prefer relaxation or family-friendly activities. </p>
+<p><strong>Problem 2: Difficulty Managing the Travel Budget</strong> </p>
+<p>Transportation, accommodation, food, and sightseeing expenses are often researched separately. Users may find individual services at reasonable prices, but the total cost of the trip can still exceed their budget. </p>
+<p><strong>Problem 3: Poorly Connected Itineraries That Waste Time and Money</strong> </p>
+<p>Tourist attractions, restaurants, and accommodations may be located far from one another. Without proper planning, users may have to travel back and forth frequently, resulting in additional expenses and insufficient time to fully enjoy their experiences. </p>
+<p><strong>Problem 4: Insufficient Preparation for Actual Conditions at the Destination</strong> </p>
+<p>Users may not be familiar with the weather, terrain, or specific characteristics of their intended destinations. For instance, watching clouds form in the early morning requires appropriate clothing for low temperatures, while hiking in forests requires consideration of insects, terrain conditions, and essential equipment. </p>
+<p><strong>Problem 5: Difficulty Evaluating and Choosing Between Different Travel Options</strong> </p>
+<p>Users often have to compare multiple routes, transportation methods, hotels, and activities on their own. A cheaper option may require more travel time, while an itinerary covering many destinations may not be suitable for those who prefer a relaxing trip. </p>
+<p><strong>Problem 6: Lack of Transparency and Personalization in Travel Recommendations</strong> </p>
+<p>Existing lists of destinations and pre-designed itineraries often fail to explain why they are suitable for particular users. As a result, users may find it difficult to determine whether a recommendation genuinely meets their requirements or simply features popular tourist destinations. </p>
+<hr>
+<h2 id="2-the-well-defined-problem">2. THE WELL-DEFINED PROBLEM</h2>
+<p>Based on these problems, our team proposes developing a personalized virtual travel assistant website to support users in planning their trips. Users can provide information about their desired destination, departure location, travel dates, group size, budget, preferences, and other specific requirements. </p>
+<p>The system will analyze the input data and retrieve relevant travel information from multiple sources. It will then generate several itinerary options, compare their advantages and disadvantages, and explain how well each option satisfies the user&#39;s requirements. This approach aims to help users make informed travel decisions and create itineraries that are personalized, practical, and aligned with their budgets and preferences. </p>
+<hr>
+<h2 id="3-an-initial-version-of-the-four-pillars">3. AN INITIAL VERSION OF THE FOUR PILLARS</h2>
+<h3 id="31-decomposition">3.1. Decomposition</h3>
+<p>To build an effective personalized travel planning assistant, our team decomposes the complex travel planning system into five interconnected, manageable sub-problems (modules):</p>
+<ol>
+<li><p><strong>User Profile &amp; Input Parsing Module:</strong></p>
+<ul>
+<li>Extracts essential input parameters from user queries: destination, departure location, duration, party size, total budget, companion type, accommodation type, and vibe preferences.</li>
+<li>Validates input feasibility (e.g., detecting unrealistic budgets like 100,000 VND for 7 days) and prompts for corrections if necessary.</li>
+</ul>
+</li>
+<li><p><strong>Destination &amp; POI Recommendation Module:</strong></p>
+<ul>
+<li><strong>Vibe-based Recommendation:</strong> When the destination is not specified, matches user vibe preferences against destination profiles to recommend top candidate cities.</li>
+<li><strong>POI Filtering &amp; Ranking:</strong> When the destination is established, filters candidate Points of Interest (POIs) based on party composition (solo, couple, friends, family) and ranks them using preference suitability scores.</li>
+</ul>
+</li>
+<li><p><strong>Budget Allocation &amp; Expense Control Module:</strong></p>
+<ul>
+<li>Categorizes the total budget into dedicated allowances: transportation, accommodation, food &amp; dining, sightseeing tickets, and contingency funds.</li>
+<li>Tracks accumulated expenses during itinerary generation to ensure total projected costs remain strictly within the user&#39;s budget ceiling.</li>
+</ul>
+</li>
+<li><p><strong>Geographical Clustering &amp; Itinerary Scheduling Module:</strong></p>
+<ul>
+<li>Groups POIs by geographical area to minimize transit time and avoid back-and-forth travel.</li>
+<li>Sequences daily activities considering opening/closing hours, expected visit durations, and reasonable resting/dining windows.</li>
+</ul>
+</li>
+<li><p><strong>Contextual Advisory &amp; Risk Warning Module:</strong></p>
+<ul>
+<li>Assesses weather forecasts and terrain characteristics for the destination.</li>
+<li>Generates tailored packing checklists (e.g., warm clothes for morning cloud-hunting) and suggests dynamic backup alternatives when unfavorable weather occurs.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="32-pattern-recognition">3.2. Pattern Recognition</h3>
+<p>During the analysis of the travel planning domain, our team identified several recurring patterns that map directly to standard computational problem models:</p>
+<ol>
+<li><p><strong>Preference &amp; Vibe Alignment Pattern (Tag Matching / Set Intersection):</strong></p>
+<ul>
+<li><em>Observation:</em> Both users and travel destinations can be described using descriptive categorical tags (e.g., <code>[&#39;Cool&#39;, &#39;Natural&#39;, &#39;Trending&#39;, &#39;Adventure&#39;]</code>).</li>
+<li><em>Computational Pattern:</em> Finding matching destinations or POIs follows the pattern of computing set intersections or similarity coefficients between the user&#39;s vibe vector and the destination&#39;s tag vector.</li>
+</ul>
+</li>
+<li><p><strong>Budget Optimization Pattern (Knapsack Problem):</strong></p>
+<ul>
+<li><em>Observation:</em> Users want to maximize experience value across attractions, accommodations, and activities while remaining under a fixed financial threshold ($B_{max}$).</li>
+<li><em>Computational Pattern:</em> This mirrors the classic <strong>0/1 Knapsack Problem</strong>, where each POI/service has an associated cost (weight) and preference score (value), and the algorithm aims to maximize total satisfaction without exceeding total budget capacity.</li>
+</ul>
+</li>
+<li><p><strong>Route Sequencing Pattern (Traveling Salesperson Problem with Time Windows - TSPTW):</strong></p>
+<ul>
+<li><em>Observation:</em> Visiting multiple attractions in a day requires finding an efficient route that minimizes travel distance while ensuring arrival occurs within each venue&#39;s operating hours.</li>
+<li><em>Computational Pattern:</em> This corresponds to the <strong>Traveling Salesperson Problem with Time Windows (TSPTW)</strong>, solvable using nearest-neighbor heuristics combined with time-slot feasibility checks.</li>
+</ul>
+</li>
+<li><p><strong>Spatial Locality Pattern (Geographic Clustering):</strong></p>
+<ul>
+<li><em>Observation:</em> Tourist spots in a region naturally form spatial clusters (e.g., Da Lat city center vs. Tuyen Lam lake area vs. Cau Dat tea hill).</li>
+<li><em>Computational Pattern:</em> Grouping destinations by geographic proximity before daily assignment maps to spatial clustering patterns (similar to K-Means or grid-based partitioning), preventing redundant cross-city transit.</li>
+</ul>
+</li>
+<li><p><strong>Adaptive Contingency Pattern (Rule-Based Fallback):</strong></p>
+<ul>
+<li><em>Observation:</em> External disruptions (e.g., sudden heavy rain during cloud-hunting or an attraction closure) require real-time plan adjustments.</li>
+<li><em>Computational Pattern:</em> This follows a deterministic condition-action rule pattern: <code>IF condition (e.g., weather == &quot;heavy_rain&quot;) THEN trigger alternative_action (replace outdoor POI with indoor café/museum)</code>.</li>
+</ul>
+</li>
+</ol>
+<h3 id="33-abstraction">3.3. Abstraction</h3>
+<p>Extract essential entities and parameters from user inputs and map them to structured computational models:</p>
+<p><strong>A. User Profile &amp; Query Abstraction</strong></p>
+<ol>
+<li><strong>Destination</strong> (<code>string</code>): Target city or region (e.g., &quot;Da Lat&quot;) or <code>NULL</code> if unspecified.</li>
+<li><strong>Budget</strong> (<code>double</code>): Maximum spending threshold for the trip ($B_{max}$).</li>
+<li><strong>Duration</strong> (<code>int</code>): Total number of travel days ($D$).</li>
+<li><strong>Vibe Preferences</strong> (<code>list of strings</code>): Desired travel atmosphere and themes (e.g., <code>[&#39;Cool&#39;, &#39;Natural&#39;, &#39;Trending&#39;, &#39;Adventure&#39;]</code>).</li>
+<li><strong>Party Composition</strong> (<code>string</code>): Traveling group type (e.g., <code>Solo</code>, <code>Couple</code>, <code>Friends</code>, <code>Family</code>).</li>
+<li><strong>Accommodation Preference</strong> (<code>string</code>): Preferred lodging style (e.g., <code>Homestay</code>, <code>Hotel</code>, <code>Resort</code>).</li>
+</ol>
+<p><strong>B. Point of Interest (POI) &amp; Destination Abstraction</strong></p>
+<ol>
+<li><strong>POI Name</strong> (<code>string</code>): Official name of the destination or attraction (e.g., &quot;Langbiang Mountain&quot;).</li>
+<li><strong>Category &amp; Vibe Tags</strong> (<code>list of strings</code>): Descriptive features used for preference alignment.</li>
+<li><strong>Average Cost</strong> (<code>double</code>): Estimated expenditure per person (entry tickets, dining, or accommodation rates).</li>
+<li><strong>Geographical Location</strong> (<code>coordinates</code> / <code>string</code>): Latitude, longitude, or address for distance calculation.</li>
+<li><strong>Operating Hours</strong> (<code>time range</code>): Opening and closing windows for scheduling feasibility.</li>
+<li><strong>Average Visit Duration</strong> (<code>double</code>): Estimated time required to visit (e.g., 1.5 to 2.0 hours).</li>
+</ol>
+<h3 id="34-algorithm-design">3.4. Algorithm Design</h3>
+<p><strong>Scenario 1: Destination-Specified Planning Workflow</strong></p>
+<ul>
+<li><strong>Step 1 (Input Acquisition):</strong> Collect user query parameters, including destination, total budget, duration, party composition, and accommodation preferences.</li>
+<li><strong>Step 2 (Input Validation &amp; Feasibility Check):</strong> Validate parameters for anomalies or unrealistic constraints (e.g., detecting unrealistic budgets such as 100,000 VND for a 7-day trip) and prompt user for revisions if needed.</li>
+<li><strong>Step 3 (Constraint Filtering &amp; Scoring):</strong> Filter candidate POIs within the target destination against mandatory constraints (budget ceiling, party fit) and score remaining candidates by preference alignment.</li>
+<li><strong>Step 4 (Spatial Clustering &amp; Daily Scheduling):</strong> Cluster POIs geographically by district/area, sequence visits using shortest-path heuristics (TSPTW), and verify time-window feasibility.</li>
+<li><strong>Step 5 (Supplemental Recommendations):</strong> Suggest nearby culinary spots and backup indoor attractions during evening hours or travel downtime.</li>
+</ul>
+<p><strong>Scenario 2: Vibe-Based Discovery Workflow (Unspecified Destination)</strong></p>
+<ul>
+<li><strong>Step 1 (Preference Elicitation):</strong> Prompt user for desired trip vibes (e.g., chill, nature-oriented, vibrant, wellness).</li>
+<li><strong>Step 2 (Tag Similarity Matching):</strong> Compute set similarity scores between user vibe tags and candidate destination characteristic profiles.</li>
+<li><strong>Step 3 (Candidate Presentation):</strong> Present the top 5 recommended destinations with estimated budget ranges and summary highlights.</li>
+<li><strong>Step 4 (Workflow Transition):</strong> Once the user selects a preferred destination, seamlessly transition to <strong>Scenario 1</strong> to synthesize the complete itinerary.</li>
+</ul>
+<hr>
+<h2 id="4-several-solutions-and-directions-explored">4. SEVERAL SOLUTIONS AND DIRECTIONS EXPLORED</h2>
+<p>The key point is that each problem does not necessarily have only one solution. The virtual assistant should consider different approaches depending on the situation and then select the most suitable solution based on the user&#39;s needs. </p>
+<h3 id="41-exploration-of-approaches-for-sub-problems">4.1. Exploration of Approaches for Sub-Problems</h3>
+<div class="problem-block"><h4 id="problem-1-difficulty-finding-destinations-that-match-personal-preferences">Problem 1: Difficulty Finding Destinations That Match Personal Preferences</h4>
+<p><strong>Example input:</strong> The user wants to visit Da Lat for 3 days and 2 nights with a group of 4 people. They enjoy nature and experiential activities but prefer to avoid overcrowded places. </p>
+<table>
+<thead>
+<tr>
+<th><strong>Solution</strong></th>
+<th><strong>Approach</strong></th>
+<th><strong>Suitability</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Filter by mandatory<br>constraints</td>
+<td>Eliminate destinations that do not meet<br>requirements regarding time, distance, or<br>accessibility.</td>
+<td>When the user has specific<br>requirements that cannot<br>be violated.</td>
+</tr>
+<tr>
+<td>B. Score destinations<br>based on preferences</td>
+<td>Assign scores to destinations according to<br>their suitability for nature, experiential<br>activities, crowd levels, and other<br>preferences.</td>
+<td>When multiple destinations<br>satisfy the mandatory<br>constraints.</td>
+</tr>
+<tr>
+<td>C. Recommend a<br>combination of<br>activity types</td>
+<td>Combine cloud hunting, nature sightseeing,<br>local experiences, and relaxation.</td>
+<td>When the user wants a<br>diverse travel experience.</td>
+</tr>
+<tr>
+<td>D. Suggest alternative<br>destinations</td>
+<td>If the preferred destination is unsuitable due<br>to weather conditions or excessive travel<br>distance, find similar alternatives.</td>
+<td>When the initial option is<br>not feasible.</td>
+</tr>
+</tbody></table>
+<p><strong>Optimal solution:</strong> Combine A + B + D. First, eliminate destinations that do not meet mandatory requirements. Then, rank the remaining destinations based on the user&#39;s preferences and prepare alternative options when necessary.</p>
+</div><div class="problem-block"><h4 id="problem-2-difficulty-managing-the-total-travel-budget">Problem 2: Difficulty Managing the Total Travel Budget</h4>
+<table>
+<thead>
+<tr>
+<th><strong>Solution</strong></th>
+<th><strong>Approach</strong></th>
+<th><strong>Trade-offs</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Choose the<br>cheapest options</td>
+<td>Prioritize low-cost transportation,<br>accommodation, and activities.</td>
+<td>Saves money but may reduce comfort.</td>
+</tr>
+<tr>
+<td>B. Allocate the budget<br>by category</td>
+<td>Divide the budget among transportation,<br>accommodation, food, sightseeing, and<br>contingency expenses.</td>
+<td>Maintains an overall balance<br>and prevents overspending in<br>one category.</td>
+</tr>
+<tr>
+<td>C. Optimize spending<br>based on experience<br>value</td>
+<td>Preserve activities the user enjoys while<br>reducing costs in less important categories.</td>
+<td>Provides a more suitable<br>experience but requires clear<br>priorities.</td>
+</tr>
+<tr>
+<td>D. Create multiple<br>budget scenarios</td>
+<td>Offer budget-friendly, balanced, and<br>comfort-oriented itineraries for<br>comparison.</td>
+<td>Provides more choices but<br>requires calculations for<br>multiple alternatives.</td>
+</tr>
+</tbody></table>
+<p><strong>Optimal solution:</strong> Combine B + C, while using D when the user has not clearly defined their priorities. The system must treat the maximum budget as a constraint when evaluating options rather than simply selecting individual services with low prices. </p>
+<p>For example, if the user particularly enjoys cloud hunting but does not consider luxury accommodation essential, the system should prioritize keeping the cloud-hunting experience while finding affordable accommodation. </p>
+<p>If no option satisfies all requirements within the budget, the system must clearly inform the user and suggest possible adjustments for them to choose from, rather than exceeding the budget without permission.</p>
+</div><div class="problem-block"><h4 id="problem-3-poorly-connected-itineraries-that-waste-time-and-money">Problem 3: Poorly Connected Itineraries That Waste Time and Money</h4>
+<p><strong>Example:</strong> The user wants to visit six destinations, eat at local restaurants, and have sufficient time to rest over two days. </p>
+<table>
+<thead>
+<tr>
+<th><strong>Solution</strong></th>
+<th><strong>Approach</strong></th>
+<th><strong>Suitability</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Arrange destinations by proximity</td>
+<td>Prioritize the next destination that is closest to the current location.</td>
+<td>When minimizing travel distance is important.</td>
+</tr>
+<tr>
+<td>B. Group destinations by area</td>
+<td>Divide attractions into geographical<br>clusters and assign them to different<br>days.</td>
+<td>When destinations are spread across several areas.</td>
+</tr>
+<tr>
+<td>C. Arrange activities according to operating<br>hours</td>
+<td>Consider opening hours, visit durations, and suitable time slots.</td>
+<td>When certain destinations are only available during specific<br>hours.</td>
+</tr>
+<tr>
+<td>D. Balance activities and<br>relaxation</td>
+<td>Limit the number of activities per day<br>and allocate sufficient time for meals<br>and rest.</td>
+<td>When the user does not want<br>an overly packed itinerary.</td>
+</tr>
+</tbody></table>
+<p><strong>Optimal solution:</strong> Combine B + C + D, then use A to determine an efficient travel order within each area. The system should not simply select the nearest destination, as this could result in conflicts with opening hours or repeated trips to the same area. Effective optimization must consider location, time, and user preferences simultaneously.</p>
+</div><div class="problem-block"><h4 id="problem-4-insufficient-preparation-for-actual-conditions-at-the-destination">Problem 4: Insufficient Preparation for Actual Conditions at the Destination</h4>
+<p><strong>Example:</strong> The user plans to go cloud hunting early in the morning or visit a forested area. </p>
+<table>
+<thead>
+<tr>
+<th><strong>Solution</strong></th>
+<th><strong>Approach</strong></th>
+<th><strong>Suitability</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Provide recommendations<br>based on destination<br>characteristics</td>
+<td>Use information about terrain, activities,<br>and typical conditions to suggest<br>necessary items.</td>
+<td>When basic<br>preparation is needed.</td>
+</tr>
+<tr>
+<td>B. Provide recommendations<br>based on weather forecasts</td>
+<td>Adjust clothing recommendations,<br>itineraries, and activities according to the<br>forecast for the travel dates.</td>
+<td>When the trip depends<br>heavily on weather<br>conditions.</td>
+</tr>
+<tr>
+<td>C. Provide risk-based warnings</td>
+<td>Warn users about heavy rain, slippery<br>roads, difficult terrain, or potentially<br>unsafe activities.</td>
+<td>When unfavorable<br>conditions may occur.</td>
+</tr>
+<tr>
+<td>D. Suggest alternative<br>activities</td>
+<td>Replace outdoor activities with indoor<br>alternatives when the weather is<br>unsuitable.</td>
+<td>When the original plan<br>may not be feasible.</td>
+</tr>
+</tbody></table>
+<p><strong>Optimal solution:</strong> Combine A + B + C + D. The system should not only provide a packing checklist but also adjust the plan when actual conditions change. </p>
+<p>For example, if rain is forecast during the planned cloud-hunting period, the system should explain the potential impact, recommend checking the forecast closer to the departure date, and suggest alternative activities. It should not guarantee that users will see clouds simply because a destination is well known for this activity.</p>
+</div><div class="problem-block"><h4 id="problem-5-difficulty-comparing-different-transportation-accommodation-and-dining-options">Problem 5: Difficulty Comparing Different Transportation, Accommodation, and Dining Options</h4>
+<p><strong>Example:</strong> The user is traveling from Ho Chi Minh City to Da Lat and is deciding between taking a coach and using a private vehicle. </p>
+<table>
+<thead>
+<tr>
+<th><strong>Solution</strong></th>
+<th><strong>Approach</strong></th>
+<th><strong>Priority</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Optimize for cost</td>
+<td>Compare the total cost for the entire group.</td>
+<td>Users with limited budgets.</td>
+</tr>
+<tr>
+<td>B. Optimize for time</td>
+<td>Compare travel time and waiting time.</td>
+<td>Users with limited vacation time.</td>
+</tr>
+<tr>
+<td>C. Optimize for comfort</td>
+<td>Consider rest requirements, group size, luggage, and driving ability.</td>
+<td>Families or groups seeking convenient transportation.</td>
+</tr>
+<tr>
+<td>D. Optimize for flexibility</td>
+<td>Consider the ability to change destinations, departure times, and routes independently.</td>
+<td>Users who enjoy exploring multiple places.</td>
+</tr>
+</tbody></table>
+<p><strong>Optimal solution:</strong> The system should not apply a single criterion to every user. Instead, it should assign scores based on the priority weights provided by the user. </p>
+<p>For example, if the user prioritizes saving money, cost should receive a higher weight. If the user is traveling with elderly people, comfort and sufficient rest time may be more important. </p>
+<p>For the same destination, the system can provide two or three alternative options, clearly presenting estimated costs, travel times, and trade-offs so that users can make informed decisions.</p>
+</div><div class="problem-block"><h4 id="problem-6-lack-of-transparency-and-personalization-in-recommendations">Problem 6: Lack of Transparency and Personalization in Recommendations</h4>
+<p><strong>Example:</strong> The system recommends a restaurant and a tourist attraction. </p>
+<table>
+<thead>
+<tr>
+<th><strong>Solution</strong></th>
+<th><strong>Approach</strong></th>
+<th><strong>Priority</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. Explain recommendations based on individual requirements</td>
+<td>Clarify how each destination matches the user&#39;s preferences,<br> budget, or location requirements.</td>
+<td>Helps users understand why<br>a recommendation was made.</td>
+</tr>
+<tr>
+<td>B. Provide information<br>sources</td>
+<td>Attach sources for prices, maps,<br>weather forecasts, and destination<br>information.</td>
+<td>Allows users to verify the<br>accuracy of the information.</td>
+</tr>
+<tr>
+<td>C. Identify unmet<br>requirements</td>
+<td>Clearly explain which requirements a<br>destination satisfies and where it<br>has limitations.</td>
+<td>Prevents exaggerated claims<br>and unrealistic expectations.</td>
+</tr>
+<tr>
+<td>D. Allow feedback and<br>adjustments</td>
+<td>Let users request cheaper options,<br>less walking, or alternative restaurants.</td>
+<td>Makes the itinerary<br>increasingly suitable for the user&#39;s needs.</td>
+</tr>
+</tbody></table>
+<p><strong>Optimal solution:</strong> Combine all four approaches. Each recommendation should identify the relevant user requirements, explain the reasons for the selection, provide supporting information sources, and disclose any limitations. When the user changes their requirements, the system should recalculate the affected parts of the itinerary.</p>
+</div><h3 id="42-selected-overall-solution">4.2. Selected Overall Solution</h3>
+<p>Based on the analysis above, our team selects an integrated solution that combines constraint filtering, suitability scoring, itinerary optimization, budget management, and explainable recommendations. </p>
+<p><strong>Proposed workflow:</strong> </p>
+<ol>
+<li><p><strong>Collect user information:</strong> Destination, travel dates, group size, budget, preferences, and special requirements. </p>
+</li>
+<li><p><strong>Analyze and classify requirements:</strong> Distinguish mandatory constraints from preference-based criteria. </p>
+</li>
+<li><p><strong>Collect and evaluate data:</strong> Gather information about destinations, service prices, maps, weather forecasts, and operating hours. </p>
+</li>
+<li><p><strong>Generate and compare alternatives:</strong> Create budget-friendly, balanced, and experience-oriented itineraries. </p>
+</li>
+<li><p><strong>Check feasibility:</strong> Evaluate the budget, routes, available time, and actual conditions. </p>
+</li>
+<li><p><strong>Present results and explanations:</strong> Provide the itinerary, estimated costs, reasons for recommendations, reference sources, and important notes.</p>
+</li>
+</ol>
+<p>The virtual assistant should be capable of answering the following questions: </p>
+<ul>
+<li><p>Which destinations best match the group&#39;s needs? </p>
+</li>
+<li><p>What transportation options provide the best balance between cost and time? </p>
+</li>
+<li><p>How should the itinerary be arranged to minimize unnecessary travel? </p>
+</li>
+<li><p>What should be changed if the budget is exceeded or the weather is unfavorable? </p>
+</li>
+<li><p>Why does the system select one option over the alternatives?</p>
+</li>
+</ul>
+<hr>
+<h3 id="43-implementation-roadmap-dataset-and-algorithm-directions">4.3. Implementation Roadmap: Dataset and Algorithm Directions</h3>
+<h4 id="431-system-objective">4.3.1. System Objective</h4>
+<p>The primary objective of this phase is to establish the technical foundation for the virtual assistant by formalizing data collection standards (Tourism Dataset) and designing the computational pipeline (Algorithms) required to transform raw user queries into feasible, optimized itineraries.</p>
+<h4 id="432-dataset-direction">4.3.2. Dataset Direction</h4>
+<p>The system avoids storing unstructured descriptive text, focusing strictly on structured numerical and categorical parameters essential for algorithmic computation.</p>
+<p><strong>A. Proposed Data Sources</strong></p>
+<ul>
+<li><strong>Geographical &amp; Spatial Data:</strong> Google Maps Platform API and OpenStreetMap (OSM) for geocoordinates, road network distances, and transit times.</li>
+<li><strong>Pricing &amp; Feedback Data:</strong> Targeted data extraction from travel platforms (e.g., TripAdvisor, Traveloka) for admission fees, average meal costs, and rating scores.</li>
+</ul>
+<p><strong>B. Standardized POI Data Schema</strong></p>
+<p>Each destination in the database is standardized into 6 core technical attributes:</p>
+<ol>
+<li><strong>POI Name &amp; Identifier:</strong> Unique identifier and official destination name.</li>
+<li><strong>Coordinates (<code>latitude</code>, <code>longitude</code>):</strong> Precise spatial coordinates for Euclidean and distance-matrix calculations.</li>
+<li><strong>Estimated Cost:</strong> Average expenditure per visitor, used as a constraint in budget optimization.</li>
+<li><strong>Category &amp; Vibe Tags:</strong> Standardized classification tags (e.g., <code>Nature</code>, <code>Cultural</code>, <code>Adventure</code>, <code>Relaxing</code>) used for preference similarity matching.</li>
+<li><strong>Operating Hours:</strong> Opening and closing time windows to guarantee schedule feasibility.</li>
+<li><strong>Average Visit Duration:</strong> Recommended time allotment (e.g., 1.5 to 2.0 hours) for itinerary scheduling.</li>
+</ol>
+<h4 id="433-algorithms-direction">4.3.3. Algorithms Direction</h4>
+<p>The processing workflow from input ingestion to final itinerary synthesis is organized into a two-stage computational pipeline:</p>
+<p><strong>Stage 1: Multi-Criteria Filtering &amp; Scoring Algorithm</strong></p>
+<ul>
+<li><strong>Hard Constraint Filtering:</strong> Instantly prunes destinations that fall outside the target geographic boundary or exceed the maximum single-activity budget threshold.</li>
+<li><strong>Preference Scoring:</strong> Evaluates set similarity (e.g., Jaccard index / tag matching) between user vibe vectors and POI tag vectors to rank candidate attractions by relevance.</li>
+</ul>
+<p><strong>Stage 2: Spatial Clustering &amp; Route Scheduling Algorithm</strong></p>
+<ul>
+<li><strong>Spatial Partitioning:</strong> Groups candidate POIs into regional daily clusters to eliminate redundant cross-city transit.</li>
+<li><strong>Routing Optimization:</strong> Solves a localized Traveling Salesperson Problem with Time Windows (TSPTW) using greedy nearest-neighbor heuristics, ensuring timely arrival within operating hours and reasonable rest intervals.</li>
+</ul>
+<h4 id="434-next-steps-phase-2">4.3.4. Next Steps (Phase 2)</h4>
+<ol>
+<li><strong>Mock Dataset Construction:</strong> Curate and validate a localized test dataset of 30–50 destinations for a representative pilot city (e.g., Da Lat).</li>
+<li><strong>Algorithmic Flowcharts &amp; Pseudocode:</strong> Formulate detailed architectural flowcharts and formal pseudocode for the multi-stage filtering and route-scheduling pipeline.</li>
+<li><strong>Feasibility Testing:</strong> Run simulation scenarios to evaluate budget adherence, transit efficiency, and schedule practicality.</li>
+</ol>
+
+
+  </article>
+</body>
+</html>

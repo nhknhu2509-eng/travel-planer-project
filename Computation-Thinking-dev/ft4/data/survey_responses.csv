@@ -1,0 +1,3 @@
+﻿Survey_ID,User_ID,Timestamp,Average_Score,Comment,Q1_UI,Q2_Performance,Q3_Input_Usability,Q4_Destination,Q5_Schedule,Q6_Rest_Time,Q7_Cost,Q8_Satisfaction,Q9_Retention,Q10_Recommendation
+SRV_20261105_034301,USR_7108,2026-11-05T03:43:01.460382,3.6,meo,3,3,2,4,4,4,4,4,4,4
+SRV_20261105_034404,USR_8992,2026-11-05T03:44:04.975083,3.2,gou,2,2,4,1,4,5,3,3,4,4

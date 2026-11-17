@@ -1,0 +1,72 @@
+[
+  {
+    "id": "Q1",
+    "text": "Bạn đánh giá giao diện ứng dụng như thế nào?",
+    "tag": "UI",
+    "group": "Nhóm 1: Trải nghiệm sử dụng ứng dụng",
+    "options": ["Rất không hài lòng", "Không hài lòng", "Bình thường", "Hài lòng", "Rất hài lòng"]
+  },
+  {
+    "id": "Q2",
+    "text": "Bạn đánh giá tốc độ phản hồi của ứng dụng như thế nào?",
+    "tag": "Performance",
+    "group": "Nhóm 1: Trải nghiệm sử dụng ứng dụng",
+    "options": ["Rất chậm", "Chậm", "Bình thường", "Nhanh", "Rất nhanh"]
+  },
+  {
+    "id": "Q3",
+    "text": "Bạn đánh giá mức độ thuận tiện khi nhập thông tin chuyến đi như thế nào?",
+    "tag": "Input_Usability",
+    "group": "Nhóm 1: Trải nghiệm sử dụng ứng dụng",
+    "options": ["Rất bất tiện", "Bất tiện", "Bình thường", "Thuận tiện", "Rất thuận tiện"]
+  },
+  {
+    "id": "Q4",
+    "text": "Các địa điểm du lịch được đề xuất phù hợp với sở thích của bạn ở mức độ nào?",
+    "tag": "Destination",
+    "group": "Nhóm 2: Chất lượng gợi ý của ứng dụng",
+    "options": ["Hoàn toàn không phù hợp", "Ít phù hợp", "Tương đối phù hợp", "Phù hợp", "Rất phù hợp"]
+  },
+  {
+    "id": "Q5",
+    "text": "Bạn đánh giá mức độ hợp lý của việc phân bổ thời gian cho các hoạt động tham quan trong lịch trình như thế nào?",
+    "tag": "Schedule",
+    "group": "Nhóm 2: Chất lượng gợi ý của ứng dụng",
+    "options": ["Rất không hợp lý", "Không hợp lý", "Bình thường", "Hợp lý", "Rất hợp lý"]
+  },
+  {
+    "id": "Q6",
+    "text": "Bạn đánh giá thời gian nghỉ ngơi được bố trí trong lịch trình như thế nào?",
+    "tag": "Rest_Time",
+    "group": "Nhóm 2: Chất lượng gợi ý của ứng dụng",
+    "options": ["Hoàn toàn không đủ", "Chưa đủ", "Tạm đủ", "Đầy đủ", "Rất thoải mái"]
+  },
+  {
+    "id": "Q7",
+    "text": "Chi phí dự kiến của chuyến đi chính xác ở mức độ nào so với thực tế?",
+    "tag": "Cost",
+    "group": "Nhóm 2: Chất lượng gợi ý của ứng dụng",
+    "options": ["Sai lệch rất nhiều", "Sai lệch khá nhiều", "Tương đối chính xác", "Khá chính xác", "Rất chính xác"]
+  },
+  {
+    "id": "Q8",
+    "text": "Bạn hài lòng với trải nghiệm tổng thể khi sử dụng ứng dụng ở mức độ nào?",
+    "tag": "Satisfaction",
+    "group": "Nhóm 3: Mức độ hài lòng của người dùng",
+    "options": ["Rất không hài lòng", "Không hài lòng", "Bình thường", "Hài lòng", "Rất hài lòng"]
+  },
+  {
+    "id": "Q9",
+    "text": "Bạn có sẵn sàng tiếp tục sử dụng ứng dụng trong tương lai không?",
+    "tag": "Retention",
+    "group": "Nhóm 3: Mức độ hài lòng của người dùng",
+    "options": ["Chắc chắn không", "Có lẽ không", "Chưa chắc chắn", "Có thể", "Chắc chắn có"]
+  },
+  {
+    "id": "Q10",
+    "text": "Bạn có sẵn sàng giới thiệu ứng dụng cho người khác không?",
+    "tag": "Recommendation",
+    "group": "Nhóm 3: Mức độ hài lòng của người dùng",
+    "options": ["Chắc chắn không", "Có lẽ không", "Chưa chắc chắn", "Có thể", "Chắc chắn có"]
+  }
+]
